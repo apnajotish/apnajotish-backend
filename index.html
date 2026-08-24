@@ -1421,6 +1421,24 @@
             </div>
         </div>
 
+        <!-- REQUIRED PROFILE MODAL - Shows when accessing services -->
+        <div id="requiredProfileModal" class="modal-overlay">
+            <div class="modal">
+                <h3>Complete Your Profile</h3>
+                <p style="color: var(--color-text-secondary); margin-bottom: 20px; font-size: 14px;">
+                    Please provide your details to access astrology services ✨
+                </p>
+                <input type="text" class="modal-input" id="requiredModalName" placeholder="Full Name" required>
+                <input type="email" class="modal-input" id="requiredModalEmail" placeholder="Email" required>
+                <input type="date" class="modal-input" id="requiredModalDob" placeholder="Date of Birth" required>
+                <input type="time" class="modal-input" id="requiredModalTime" placeholder="Birth Time (optional)">
+                <input type="text" class="modal-input" id="requiredModalPlace" placeholder="Birth Place" required>
+                <div class="modal-buttons">
+                    <button style="background:var(--color-primary); color:#fff;" onclick="saveRequiredProfile()">Continue</button>
+                </div>
+            </div>
+        </div>
+
         <!-- ============================================================
         SCREEN: HOME
         ============================================================ -->
@@ -2520,6 +2538,94 @@
             if (document.readyState === 'complete' || document.readyState === 'interactive') init();
 
         })();
-    </script>
+    
+        // ============================================================
+        // REQUIRED PROFILE CHECK - FIX #17
+        // ============================================================
+        
+        function isProfileComplete() {
+            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            return profile.name && profile.email && profile.dob && profile.place;
+        }
+
+        function showRequiredProfileModal() {
+            const modal = document.getElementById('requiredProfileModal');
+            modal.style.display = 'flex';
+            
+            // Pre-fill if exists
+            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            document.getElementById('requiredModalName').value = profile.name || '';
+            document.getElementById('requiredModalEmail').value = profile.email || '';
+            document.getElementById('requiredModalDob').value = profile.dob || '';
+            document.getElementById('requiredModalTime').value = profile.time || '';
+            document.getElementById('requiredModalPlace').value = profile.place || '';
+        }
+
+        function closeRequiredProfileModal() {
+            const modal = document.getElementById('requiredProfileModal');
+            modal.style.display = 'none';
+        }
+
+        function saveRequiredProfile() {
+            const name = document.getElementById('requiredModalName').value.trim();
+            const email = document.getElementById('requiredModalEmail').value.trim();
+            const dob = document.getElementById('requiredModalDob').value;
+            const time = document.getElementById('requiredModalTime').value;
+            const place = document.getElementById('requiredModalPlace').value.trim();
+
+            if (!name || !email || !dob || !place) {
+                alert('❌ Please fill in all required fields');
+                return;
+            }
+
+            const profile = {
+                name: name,
+                email: email,
+                dob: dob,
+                time: time,
+                place: place
+            };
+
+            localStorage.setItem('userProfile', JSON.stringify(profile));
+            closeRequiredProfileModal();
+            
+            // Update greeting with name
+            document.getElementById('userName').textContent = name.split(' ')[0];
+            
+            alert('✅ Profile saved! Enjoy your astrology journey 🌟');
+        }
+
+        function checkProfileAndNavigate(screen) {
+            if (!isProfileComplete()) {
+                showRequiredProfileModal();
+                return false;
+            }
+            navigateTo(screen);
+            return true;
+        }
+
+        // Override navigateTo for protected screens
+        const originalNavigateTo = navigateTo;
+        window.navigateTo = function(screen) {
+            const protectedScreens = ['ask', 'astrology', 'numerology', 'tarot', 'vastu', 'lal-kitab', 'palmistry', 'face-reading', 'signature', 'muhurat', 'remedies', 'compatibility', 'panchang'];
+            
+            if (protectedScreens.includes(screen)) {
+                if (!isProfileComplete()) {
+                    showRequiredProfileModal();
+                    return;
+                }
+            }
+            
+            originalNavigateTo(screen);
+        };
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('requiredProfileModal');
+            if (event.target === modal) {
+                closeRequiredProfileModal();
+            }
+        });
+</script>
 </body>
 </html>
