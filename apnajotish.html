@@ -1,0 +1,2525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Apna Jotish · Your Pathway to Cosmic Wisdom [FIXED v2.1]</title>
+    <!-- Font Awesome for crisp icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ============================================================
+                   ROOT VARIABLES & THEMES
+                   ============================================================ */
+        :root {
+            --color-primary: #C1272D;
+            --color-primary-dark: #8F1D22;
+            --color-primary-light: #F3D6D7;
+            --color-primary-glow: rgba(193, 39, 45, 0.3);
+            --color-secondary: #6B4C7A;
+            --color-secondary-light: #E8DCF0;
+            --color-bg: #FCF8F2;
+            --color-bg-secondary: #F5EDE0;
+            --color-card: #FFFFFF;
+            --color-text-primary: #1A1A2E;
+            --color-text-secondary: #4A4A5A;
+            --color-text-muted: #8A8A9A;
+            --color-border: #E8E0D8;
+            --color-success: #6B9E6B;
+            --color-warning: #D4A548;
+            --color-danger: #D48B8B;
+            --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.06);
+            --shadow-primary: 0 8px 28px rgba(193, 39, 45, 0.3);
+            --radius: 20px;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* Dark Theme - FIX #3: Better contrast for primary-light */
+        body.dark {
+            --color-bg: #12121A;
+            --color-bg-secondary: #1E1E2A;
+            --color-card: #252535;
+            --color-text-primary: #F0EEDF;
+            --color-text-secondary: #B8B8C8;
+            --color-text-muted: #787888;
+            --color-border: #333345;
+            --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --color-primary-light: #6B4549;
+            --color-primary-glow: rgba(193, 39, 45, 0.15);
+        }
+
+        /* ============================================================
+                   RESET & BASE
+                   ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            -webkit-text-size-adjust: 100%;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font);
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            transition: background 0.3s, color 0.3s;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-secondary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 4px;
+        }
+
+        #app {
+            max-width: 480px;
+            width: 100%;
+            background: var(--color-bg);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 90px;
+            transition: background 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* ============================================================
+                   GLOBAL UTILITIES
+                   ============================================================ */
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+        .gap-12 {
+            gap: 12px;
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+        .mt-16 {
+            margin-top: 16px;
+        }
+        .mt-24 {
+            margin-top: 24px;
+        }
+        .mb-16 {
+            margin-bottom: 16px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: var(--color-text-muted);
+        }
+        .w-full {
+            width: 100%;
+        }
+        .hidden {
+            display: none !important;
+        }
+
+        /* ============================================================
+                   KEYFRAME ANIMATIONS
+                   ============================================================ */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        @keyframes pulseGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 var(--color-primary-glow);
+            }
+            50% {
+                box-shadow: 0 0 0 16px transparent;
+            }
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes flipInY {
+            from {
+                transform: perspective(600px) rotateY(-180deg);
+                opacity: 0;
+            }
+            to {
+                transform: perspective(600px) rotateY(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-fade-slide {
+            animation: fadeSlideUp 0.5s ease forwards;
+        }
+        .animate-scale {
+            animation: scaleIn 0.4s ease forwards;
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* ============================================================
+                   LOADING SCREEN
+                   ============================================================ */
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--color-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: var(--shadow-primary);
+            animation: pulseGlow 2s infinite;
+        }
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--color-border);
+            border-radius: 4px;
+            margin-top: 24px;
+            overflow: hidden;
+        }
+        .loader-bar::after {
+            content: '';
+            display: block;
+            width: 40%;
+            height: 100%;
+            background: var(--color-primary);
+            border-radius: 4px;
+            animation: shimmer 1.2s ease-in-out infinite;
+        }
+
+        /* ============================================================
+                   BOTTOM NAVIGATION
+                   ============================================================ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 480px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 16px;
+            border-top: 1px solid var(--color-border);
+            z-index: 100;
+            transition: background 0.3s, border 0.3s;
+        }
+        body.dark .bottom-nav {
+            background: rgba(18, 18, 26, 0.85);
+            border-top-color: #2A2A3A;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            padding: 4px 12px;
+            background: none;
+            border: none;
+            transition: color 0.3s, transform 0.2s;
+            position: relative;
+            min-width: 52px;
+        }
+        .nav-item .nav-icon {
+            font-size: 22px;
+            margin-bottom: 2px;
+            transition: transform 0.3s;
+        }
+        .nav-item.active {
+            color: var(--color-primary);
+        }
+        .nav-item.active .nav-icon {
+            transform: translateY(-4px) scale(1.1);
+        }
+        .nav-item .badge {
+            position: absolute;
+            top: -4px;
+            right: 0;
+            background: var(--color-primary);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+        }
+
+        /* ============================================================
+                   SCREENS
+                   ============================================================ */
+        .screen {
+            display: none;
+            padding: 20px 16px 28px;
+            animation: fadeSlideUp 0.5s ease;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        /* ============================================================
+                   HEADER / BRAND
+                   ============================================================ */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0 16px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: var(--shadow-primary);
+            flex-shrink: 0;
+        }
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+        .brand-name span {
+            color: var(--color-primary);
+        }
+
+        /* ============================================================
+                   HERO CARD
+                   ============================================================ */
+        .hero-card {
+            background: linear-gradient(145deg, var(--color-primary), var(--color-primary-dark));
+            border-radius: var(--radius);
+            padding: 32px 20px 28px;
+            text-align: center;
+            margin-bottom: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow-primary);
+            transition: transform 0.2s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+        }
+        .hero-card::after {
+            content: '✨';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 120px;
+            opacity: 0.08;
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+        .hero-card:active {
+            transform: scale(0.97);
+        }
+        .hero-card h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 4px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-card p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+                   GREETING
+                   ============================================================ */
+        .greeting-block {
+            margin-bottom: 20px;
+        }
+        .greeting-block h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .greeting-block .sub {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        /* ============================================================
+                   SYSTEM GRID
+                   ============================================================ */
+        .section-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0 12px;
+        }
+        .section-label h3 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        .section-label .see-all {
+            font-size: 13px;
+            color: var(--color-primary);
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .system-item {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 14px 6px 12px;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            border: 1px solid var(--color-border);
+        }
+        .system-item:active {
+            transform: scale(0.94);
+        }
+        .system-item .icon {
+            font-size: 28px;
+            display: block;
+        }
+        .system-item .label {
+            font-size: 11px;
+            font-weight: 500;
+            margin-top: 4px;
+            color: var(--color-text-secondary);
+        }
+
+        /* ============================================================
+                   LIFE AREAS
+                   ============================================================ */
+        .life-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .life-item {
+            background: var(--color-bg-secondary);
+            border-radius: 16px;
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.15s;
+            border: 1px solid transparent;
+        }
+        .life-item:active {
+            transform: scale(0.95);
+            background: var(--color-border);
+        }
+        .life-item .li-icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* ============================================================
+                   CARDS
+                   ============================================================ */
+        .card {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 16px;
+            border: 1px solid var(--color-border);
+            transition: background 0.3s, border 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .card-flat {
+            background: var(--color-bg-secondary);
+            border: none;
+            box-shadow: none;
+        }
+
+        /* ============================================================
+                   BUTTONS
+                   ============================================================ */
+        .btn-primary {
+            background: var(--color-primary);
+            color: #fff;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.3s;
+            box-shadow: var(--shadow-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            background: var(--color-primary-dark);
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--color-border);
+            color: var(--color-text-primary);
+            padding: 14px 24px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-secondary:active {
+            background: var(--color-bg-secondary);
+        }
+
+        .btn-voice {
+            background: var(--color-bg-secondary);
+            border: 2px dashed var(--color-border);
+            padding: 14px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-voice.listening {
+            border-color: var(--color-primary);
+            background: var(--color-primary-light);
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+            border-radius: 30px;
+            width: auto;
+            border: 1px solid var(--color-border);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-small.active {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+
+        /* ============================================================
+                   FORM ELEMENTS
+                   ============================================================ */
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            background: var(--color-card);
+            color: var(--color-text-primary);
+            transition: border 0.2s, box-shadow 0.2s;
+            min-height: 110px;
+            resize: vertical;
+        }
+        .form-group textarea:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 4px var(--color-primary-glow);
+            outline: none;
+        }
+        .example-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .example-chip {
+            background: var(--color-bg-secondary);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .example-chip:active {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+        }
+
+        /* ============================================================
+                   TAROT 3D FLIP - FIX #2: Dark mode colors
+                   ============================================================ */
+        .tarot-cards {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin: 16px 0;
+        }
+        .tarot-card {
+            width: 80px;
+            height: 120px;
+            perspective: 600px;
+            cursor: pointer;
+        }
+        .tarot-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .tarot-card.flipped .tarot-card-inner {
+            transform: rotateY(180deg);
+        }
+        .tarot-card-front,
+        .tarot-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-card);
+            font-weight: 600;
+            font-size: 13px;
+            text-align: center;
+            padding: 8px;
+        }
+        .tarot-card-front {
+            background: var(--color-bg-secondary);
+            color: var(--color-text-primary);
+            font-size: 36px;
+            border: 2px solid var(--color-border);
+        }
+        .tarot-card-back {
+            background: var(--color-card);
+            color: var(--color-text-primary);
+            transform: rotateY(180deg);
+            border: 2px solid var(--color-primary);
+        }
+        .tarot-card-back .t-title {
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .tarot-card-back .t-meaning {
+            font-size: 9px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        /* FIX #6: Mobile tarot text overflow */
+        @media (max-width: 420px) {
+            .tarot-card {
+                width: 68px;
+                height: 104px;
+            }
+            .tarot-card-back .t-title {
+                font-size: 11px;
+            }
+            .tarot-card-back .t-meaning {
+                font-size: 8px;
+            }
+        }
+
+        /* ============================================================
+                   REPORTS - FIX #18: Ellipsis for long summaries
+                   ============================================================ */
+        .report-card {
+            cursor: pointer;
+            border-left: 4px solid var(--color-primary);
+            transition: all 0.3s;
+        }
+        .report-card:active {
+            transform: scale(0.98);
+        }
+        .report-card .summary {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .report-card .meta {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+        .report-card .meta .tag {
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* ============================================================
+                   VASTU COMPASS
+                   ============================================================ */
+        .vastu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            max-width: 240px;
+            margin: 12px auto;
+        }
+        .vastu-cell {
+            padding: 12px 4px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+        }
+        .vastu-cell.good {
+            background: var(--color-success);
+            color: #fff;
+        }
+        .vastu-cell.warn {
+            background: var(--color-warning);
+            color: #fff;
+        }
+        .vastu-cell.danger {
+            background: var(--color-danger);
+            color: #fff;
+        }
+
+        /* ============================================================
+                   REMEDIES
+                   ============================================================ */
+        .remedy-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .remedy-item:last-child {
+            border-bottom: none;
+        }
+        .remedy-item .r-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            width: 40px;
+            text-align: center;
+        }
+        .remedy-item .r-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .remedy-item .r-desc {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+        .remedy-item .r-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        /* ============================================================
+                   MODULE HEADER
+                   ============================================================ */
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .module-header .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            color: var(--color-text-secondary);
+        }
+        .module-header .back-btn:active {
+            color: var(--color-primary);
+        }
+        .module-header .m-icon {
+            font-size: 28px;
+        }
+        .module-header h2 {
+            font-size: 20px;
+        }
+
+        /* ============================================================
+                   LOADING OVERLAY - FIX #14: Progress indicator
+                   ============================================================ */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 200;
+            animation: fadeIn 0.3s ease;
+        }
+        .loading-overlay.show {
+            display: flex;
+        }
+        .loading-box {
+            background: var(--color-card);
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            max-width: 320px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            animation: scaleIn 0.3s ease;
+        }
+        .loading-box .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--color-border);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        .loading-box .step-text {
+            font-size: 15px;
+            color: var(--color-text-secondary);
+            min-height: 24px;
+        }
+        .loading-box .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--color-border);
+            border-radius: 2px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        .loading-box .progress-bar::after {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: var(--color-primary);
+            animation: progressAnim 3s ease;
+        }
+        @keyframes progressAnim {
+            0% { width: 0%; }
+            90% { width: 90%; }
+            100% { width: 100%; }
+        }
+
+        /* ============================================================
+                   EMPTY STATE
+                   ============================================================ */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .empty-state .empty-icon {
+            font-size: 48px;
+            opacity: 0.4;
+        }
+
+        /* ============================================================
+                   PROFILE MODAL - FIX #16: Replace prompts with form
+                   ============================================================ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal {
+            background: var(--color-card);
+            padding: 28px;
+            border-radius: var(--radius);
+            max-width: 360px;
+            width: 90%;
+            box-shadow: var(--shadow-card);
+            animation: scaleIn 0.3s ease;
+        }
+        .modal h3 {
+            margin-bottom: 16px;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            font-family: inherit;
+        }
+        .modal-input:focus {
+            border-color: var(--color-primary);
+            outline: none;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* ============================================================
+                   RESPONSIVE
+                   ============================================================ */
+        @media (max-width: 420px) {
+            .system-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .life-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-card h2 {
+                font-size: 20px;
+            }
+            #app {
+                padding-bottom: 76px;
+            }
+        }
+        @media (max-width: 360px) {
+            .system-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .life-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============================================================
+                   DARK MODE TOGGLE
+                   ============================================================ */
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 4px 8px;
+            color: var(--color-text-secondary);
+            transition: transform 0.3s;
+        }
+        .theme-toggle:active {
+            transform: rotate(45deg);
+        }
+
+        /* Charts */
+        .chart-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(var(--color-primary) 0deg 240deg, var(--color-border) 240deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .chart-ring-inner {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--color-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Scrollable tabs */
+        .tab-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 0 12px;
+            scrollbar-width: none;
+        }
+        .tab-bar::-webkit-scrollbar {
+            display: none;
+        }
+        .tab-bar .tab {
+            white-space: nowrap;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: var(--color-bg-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-bar .tab.active {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+
+        /* FIX #9: Empty remedies state */
+        .empty-remedies {
+            text-align: center;
+            padding: 20px;
+            color: var(--color-text-muted);
+            font-size: 14px;
+        }
+
+        /* Brand Logo Image */
+        .brand-logo-image {
+            max-width: 100%;
+            height: auto;
+            width: 100%;
+        }
+
+        .logo-container {
+            padding: 20px 16px 0;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .logo-container img {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+            animation: fadeSlideUp 0.6s ease;
+        }
+
+        body.dark .logo-container img {
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        /* ============================================================
+                   ANIMATED SPLASH SCREEN
+                   ============================================================ */
+        
+        @keyframes splashFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes splashLogoZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-15deg);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes splashGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(193, 39, 45, 0.3),
+                            0 0 40px rgba(193, 39, 45, 0.1),
+                            0 0 60px rgba(193, 39, 45, 0.05);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(193, 39, 45, 0.6),
+                            0 0 80px rgba(193, 39, 45, 0.3),
+                            0 0 120px rgba(193, 39, 45, 0.1);
+            }
+        }
+
+        @keyframes messageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes messageBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes dotsBlink {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .splash-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #FCF8F2 0%, #F5EDE0 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: splashFadeIn 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .splash-screen.dark-mode {
+            background: linear-gradient(135deg, #12121A 0%, #1E1E2A 100%);
+        }
+
+        .splash-logo-wrapper {
+            position: relative;
+            margin-bottom: 40px;
+            animation: splashLogoZoom 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .splash-logo-wrapper img {
+            max-width: 320px;
+            width: 85vw;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
+            animation: splashGlow 3s ease-in-out infinite;
+        }
+
+        .splash-screen.dark-mode .splash-logo-wrapper img {
+            filter: drop-shadow(0 4px 20px rgba(193, 39, 45, 0.2));
+        }
+
+        .splash-content {
+            text-align: center;
+            padding: 0 24px;
+            max-width: 400px;
+        }
+
+        .splash-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 12px;
+            animation: messageFadeIn 0.8s ease 0.3s both;
+            letter-spacing: -0.5px;
+        }
+
+        .splash-subtitle {
+            font-size: 16px;
+            color: var(--color-text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.5;
+            animation: messageFadeIn 0.8s ease 0.5s both;
+        }
+
+        .splash-cta {
+            font-size: 15px;
+            color: var(--color-primary);
+            font-weight: 600;
+            animation: messageBounce 2s ease-in-out infinite;
+            animation-delay: 0.7s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 20px;
+        }
+
+        .splash-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .splash-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            animation: dotsBlink 1.4s ease-in-out infinite;
+        }
+
+        .splash-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .splash-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .splash-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .splash-footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 13px;
+            color: var(--color-text-muted);
+            animation: messageFadeIn 1s ease 1s both;
+        }
+
+        /* Hide splash screen after animation */
+        .splash-screen.hide {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive splash screen */
+        @media (max-width: 420px) {
+            .splash-title {
+                font-size: 24px;
+            }
+            .splash-subtitle {
+                font-size: 15px;
+            }
+            .splash-logo-wrapper img {
+                max-width: 280px;
+            }
+            .splash-footer {
+                bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    LOADING SCREEN
+    ============================================================ -->
+    <div id="loading-screen">
+        <div class="loader-logo animate-float">✦</div>
+        <div class="loader-bar"></div>
+        <p style="margin-top:12px; font-size:14px; color:var(--color-text-muted);">Awakening the cosmos …</p>
+    </div>
+
+    <!-- ============================================================
+    ANIMATED SPLASH SCREEN
+    ============================================================ -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-logo-wrapper">
+            <img src="apnajotish-logo-main.png" alt="APNAJOTISH">
+        </div>
+        
+        <div class="splash-content">
+            <h1 class="splash-title">APNA JOTISH</h1>
+            <p class="splash-subtitle">Your Pathway to Cosmic Wisdom</p>
+            <div class="splash-cta">
+                <span>Click to enter the world of predictions</span>
+                <div class="splash-dots">
+                    <div class="splash-dot"></div>
+                    <div class="splash-dot"></div>
+                    <div class="splash-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="splash-footer">
+            👆 Tap to continue
+        </div>
+    </div>
+
+    <!-- ============================================================
+    APP
+    ============================================================ -->
+    <div id="app">
+
+        <!-- ============================================================
+        LOADING OVERLAY (for question processing)
+        ============================================================ -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-box">
+                <div class="spinner"></div>
+                <div class="step-text" id="loadingStep">✨ Consulting the stars …</div>
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        PROFILE MODAL - FIX #16
+        ============================================================ -->
+        <div id="profileModal" class="modal-overlay">
+            <div class="modal">
+                <h3>Edit Profile</h3>
+                <input type="text" class="modal-input" id="modalName" placeholder="Full Name">
+                <input type="email" class="modal-input" id="modalEmail" placeholder="Email">
+                <input type="date" class="modal-input" id="modalDob" placeholder="Date of Birth">
+                <input type="time" class="modal-input" id="modalTime" placeholder="Birth Time">
+                <input type="text" class="modal-input" id="modalPlace" placeholder="Birth Place">
+                <div class="modal-buttons">
+                    <button style="background:var(--color-primary); color:#fff;" onclick="saveProfile()">Save</button>
+                    <button style="background:var(--color-border); color:var(--color-text-primary);" onclick="closeProfileModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        SCREEN: HOME
+        ============================================================ -->
+        <div id="screen-home" class="screen active">
+            <div class="app-header">
+                <div style="flex:1;"></div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+
+            <div class="logo-container">
+                <img src="apnajotish-logo-main.png" alt="APNAJOTISH - Your Pathway to Cosmic Wisdom" class="brand-logo-image">
+            </div>
+
+            <div class="greeting-block">
+                <h1>Good <span id="greetingTime">Morning</span>, <span id="userName">Seeker</span></h1>
+                <div class="sub">Your Pathway to Cosmic Wisdom ✨</div>
+            </div>
+
+            <div class="hero-card" onclick="navigateTo('ask')">
+                <h2>✨ ASK MY PROBLEM</h2>
+                <p>Type or speak your question — get unified guidance</p>
+            </div>
+
+            <div class="section-label">
+                <h3>🌟 Explore</h3>
+                <button class="see-all" onclick="navigateTo('explore')">See All →</button>
+            </div>
+            <div class="system-grid">
+                <div class="system-item" onclick="navigateTo('astrology')"><span class="icon">🔮</span><span class="label">Astrology</span></div>
+                <div class="system-item" onclick="navigateTo('numerology')"><span class="icon">🔢</span><span class="label">Numerology</span></div>
+                <div class="system-item" onclick="navigateTo('tarot')"><span class="icon">🃏</span><span class="label">Tarot</span></div>
+                <div class="system-item" onclick="navigateTo('vastu')"><span class="icon">🏠</span><span class="label">Vastu</span></div>
+                <div class="system-item" onclick="navigateTo('lal-kitab')"><span class="icon">🕉️</span><span class="label">Lal Kitab</span></div>
+                <div class="system-item" onclick="navigateTo('palmistry')"><span class="icon">🖐️</span><span class="label">Palmistry</span></div>
+                <div class="system-item" onclick="navigateTo('face-reading')"><span class="icon">👤</span><span class="label">Face Reading</span></div>
+                <div class="system-item" onclick="navigateTo('signature')"><span class="icon">✍️</span><span class="label">Signature</span></div>
+            </div>
+
+            <div class="section-label">
+                <h3>📍 Life Areas</h3>
+            </div>
+            <div class="life-grid">
+                <div class="life-item" onclick="quickAsk('marriage')"><span class="li-icon">❤️</span>Love &amp; Marriage</div>
+                <div class="life-item" onclick="quickAsk('career')"><span class="li-icon">💼</span>Career</div>
+                <div class="life-item" onclick="quickAsk('money')"><span class="li-icon">💰</span>Money</div>
+                <div class="life-item" onclick="quickAsk('family')"><span class="li-icon">👨‍👩‍👧</span>Family</div>
+                <div class="life-item" onclick="quickAsk('home')"><span class="li-icon">🏠</span>Home &amp; Vastu</div>
+                <div class="life-item" onclick="quickAsk('travel')"><span class="li-icon">✈️</span>Foreign Travel</div>
+            </div>
+
+            <div class="card card-flat mt-16" style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="navigateTo('remedies')">
+                <span style="font-size:28px;">🧿</span>
+                <div><strong>Daily Remedy</strong><br><span class="text-muted" style="font-size:14px;">Light a ghee lamp today for inner peace</span></div>
+                <span style="margin-left:auto; color:var(--color-primary);">→</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        SCREEN: ASK
+        ============================================================ -->
+        <div id="screen-ask" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('home')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>What's troubling you?</h2>
+            </div>
+            <p class="text-muted" style="margin-top:-4px; margin-bottom:16px;">Describe your situation — we'll find the right lens.</p>
+
+            <div class="form-group">
+                <textarea id="questionInput" placeholder="Type your question here…" rows="4"></textarea>
+            </div>
+
+            <button class="btn-voice" id="voiceBtn" onclick="toggleVoice()" aria-label="Ask by voice">
+                <i class="fas fa-microphone"></i> Ask by Voice
+            </button>
+
+            <div style="margin:14px 0 8px; text-align:center; font-size:13px; color:var(--color-text-muted);">— or pick an example —</div>
+            <div class="example-chips">
+                <button class="example-chip" onclick="setExample('Will I get married this year?')">💍 Marriage</button>
+                <button class="example-chip" onclick="setExample('Why am I facing career problems?')">💼 Career</button>
+                <button class="example-chip" onclick="setExample('Should I start a new business?')">🏢 Business</button>
+                <button class="example-chip" onclick="setExample('My house doesn\'t feel peaceful. What should I check?')">🏠 Vastu</button>
+            </div>
+
+            <button class="btn-primary mt-16" id="askBtn" onclick="submitQuestion()">
+                <i class="fas fa-sparkles"></i> Get Guidance
+            </button>
+        </div>
+
+        <!-- ============================================================
+        SCREEN: EXPLORE
+        ============================================================ -->
+        <div id="screen-explore" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('home')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>🔍 Explore All</h2>
+            </div>
+            <div class="system-grid" style="margin-top:8px;">
+                <div class="system-item" onclick="navigateTo('astrology')"><span class="icon">🔮</span><span class="label">Astrology</span></div>
+                <div class="system-item" onclick="navigateTo('numerology')"><span class="icon">🔢</span><span class="label">Numerology</span></div>
+                <div class="system-item" onclick="navigateTo('tarot')"><span class="icon">🃏</span><span class="label">Tarot</span></div>
+                <div class="system-item" onclick="navigateTo('vastu')"><span class="icon">🏠</span><span class="label">Vastu</span></div>
+                <div class="system-item" onclick="navigateTo('lal-kitab')"><span class="icon">🕉️</span><span class="label">Lal Kitab</span></div>
+                <div class="system-item" onclick="navigateTo('palmistry')"><span class="icon">🖐️</span><span class="label">Palmistry</span></div>
+                <div class="system-item" onclick="navigateTo('face-reading')"><span class="icon">👤</span><span class="label">Face Reading</span></div>
+                <div class="system-item" onclick="navigateTo('signature')"><span class="icon">✍️</span><span class="label">Signature</span></div>
+                <div class="system-item" onclick="navigateTo('muhurat')"><span class="icon">📅</span><span class="label">Muhurat</span></div>
+                <div class="system-item" onclick="navigateTo('remedies')"><span class="icon">🧿</span><span class="label">Remedies</span></div>
+                <div class="system-item" onclick="navigateTo('compatibility')"><span class="icon">💞</span><span class="label">Compatibility</span></div>
+                <div class="system-item" onclick="navigateTo('panchang')"><span class="icon">🌙</span><span class="label">Panchang</span></div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        SCREEN: REPORTS
+        ============================================================ -->
+        <div id="screen-reports" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('home')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>📄 My Reports</h2>
+                <span style="margin-left:auto; font-size:14px; color:var(--color-text-muted);" id="reportCount">0</span>
+            </div>
+            <div id="reportsList"></div>
+            <div id="noReports" class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h4>No reports yet</h4>
+                <p class="text-muted">Ask a question to receive your first guidance.</p>
+                <button class="btn-primary mt-16" style="max-width:200px; margin:16px auto 0;" onclick="navigateTo('ask')">✨ Ask Now</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        SCREEN: PROFILE
+        ============================================================ -->
+        <div id="screen-profile" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('home')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>👤 My Profile</h2>
+            </div>
+            <div class="card" style="text-align:center;">
+                <div style="width:72px; height:72px; border-radius:50%; background:var(--color-primary-light); margin:0 auto 12px; display:flex; align-items:center; justify-content:center; font-size:32px; color:var(--color-primary);">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3 id="profileNameDisplay">Seeker</h3>
+                <p class="text-muted" id="profileEmailDisplay">seeker@example.com</p>
+            </div>
+            <div class="card">
+                <div class="flex-between" style="padding:6px 0;"><span class="text-muted">Full Name</span><span id="profileName">Seeker</span></div>
+                <div class="flex-between" style="padding:6px 0;"><span class="text-muted">Date of Birth</span><span id="profileDob">—</span></div>
+                <div class="flex-between" style="padding:6px 0;"><span class="text-muted">Birth Time</span><span id="profileTime">—</span></div>
+                <div class="flex-between" style="padding:6px 0;"><span class="text-muted">Birth Place</span><span id="profilePlace">—</span></div>
+            </div>
+            <button class="btn-secondary" onclick="openProfileModal()"><i class="fas fa-edit"></i> Edit Profile</button>
+            <button class="btn-secondary mt-8" style="border-color:var(--color-danger); color:var(--color-danger);" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            <div style="margin-top:16px; text-align:center;">
+                <span class="text-muted" style="font-size:12px;">Apna Jotish v2.1 [FIXED] · Traditional guidance only</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        MODULE: ASTROLOGY
+        ============================================================ -->
+        <div id="screen-astrology" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🔮</span><h2>Astrology</h2>
+            </div>
+            <div class="card">
+                <p style="font-weight:600;">Your Birth Chart Snapshot</p>
+                <div style="display:flex; justify-content:space-around; margin:12px 0;">
+                    <div><span class="text-muted">Lagna</span><br><strong>Aries</strong></div>
+                    <div><span class="text-muted">Rashi</span><br><strong>Taurus</strong></div>
+                    <div><span class="text-muted">Nakshatra</span><br><strong>Rohini</strong></div>
+                </div>
+                <div class="chart-ring">
+                    <div class="chart-ring-inner">78%</div>
+                </div>
+                <div class="flex-between mt-8">
+                    <span class="text-muted">Mahadasha</span><strong>Jupiter</strong>
+                </div>
+                <div class="flex-between"><span class="text-muted">Antardasha</span><strong>Saturn</strong></div>
+            </div>
+            <button class="btn-primary" onclick="alert('🔮 Full Kundli with houses, yogas & doshas would appear here.')"><i class="fas fa-chart-pie"></i> View Detailed Kundli</button>
+        </div>
+
+        <!-- ============================================================
+        MODULE: NUMEROLOGY
+        ============================================================ -->
+        <div id="screen-numerology" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🔢</span><h2>Numerology</h2>
+            </div>
+            <div class="card">
+                <div class="flex-between"><span class="text-muted">Life Path</span><strong>5</strong></div>
+                <div class="flex-between"><span class="text-muted">Destiny</span><strong>8</strong></div>
+                <div class="flex-between"><span class="text-muted">Name Number</span><strong>3</strong></div>
+                <div class="flex-between"><span class="text-muted">Personal Year</span><strong>7</strong></div>
+                <div class="flex-between"><span class="text-muted">Personal Month</span><strong>4</strong></div>
+            </div>
+            <button class="btn-primary" onclick="alert('✏️ Name correction suggestions based on your DOB would appear here.')"><i class="fas fa-pen"></i> Name Correction</button>
+        </div>
+
+        <!-- ============================================================
+        MODULE: TAROT
+        ============================================================ -->
+        <div id="screen-tarot" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🃏</span><h2>Tarot</h2>
+            </div>
+            <p class="text-muted">Think of your question, then tap a card.</p>
+            <div class="tarot-cards">
+                <div class="tarot-card" onclick="drawTarot(0)">
+                    <div class="tarot-card-inner">
+                        <div class="tarot-card-front">🃏</div>
+                        <div class="tarot-card-back"><span class="t-title">The Fool</span><span class="t-meaning">New beginnings</span></div>
+                    </div>
+                </div>
+                <div class="tarot-card" onclick="drawTarot(1)">
+                    <div class="tarot-card-inner">
+                        <div class="tarot-card-front">🃏</div>
+                        <div class="tarot-card-back"><span class="t-title">The Magician</span><span class="t-meaning">Manifestation</span></div>
+                    </div>
+                </div>
+                <div class="tarot-card" onclick="drawTarot(2)">
+                    <div class="tarot-card-inner">
+                        <div class="tarot-card-front">🃏</div>
+                        <div class="tarot-card-back"><span class="t-title">The Lovers</span><span class="t-meaning">Alignment</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id="tarotResult" class="card" style="display:none; animation:fadeSlideUp 0.4s ease;"></div>
+        </div>
+
+        <!-- ============================================================
+        MODULE: VASTU
+        ============================================================ -->
+        <div id="screen-vastu" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🏠</span><h2>Vastu Shastra</h2>
+            </div>
+            <div class="vastu-grid">
+                <div class="vastu-cell">NW</div>
+                <div class="vastu-cell good">N</div>
+                <div class="vastu-cell">NE</div>
+                <div class="vastu-cell warn">W</div>
+                <div class="vastu-cell" style="font-weight:700;">🌿</div>
+                <div class="vastu-cell good">E</div>
+                <div class="vastu-cell">SW</div>
+                <div class="vastu-cell danger">S</div>
+                <div class="vastu-cell">SE</div>
+            </div>
+            <div class="card"><span class="text-muted">Main Entrance:</span> East 🟢 <strong>Good</strong><br><span class="text-muted">Kitchen:</span> South-East 🟡 <strong>Attention</strong></div>
+            <button class="btn-primary" onclick="alert('📤 Upload floor plan or photo for detailed analysis.')"><i class="fas fa-upload"></i> Upload Floor Plan</button>
+        </div>
+
+        <!-- ============================================================
+        MODULE: LAL KITAB
+        ============================================================ -->
+        <div id="screen-lal-kitab" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🕉️</span><h2>Lal Kitab</h2>
+            </div>
+            <div class="card"><span class="text-muted">Planetary Position:</span> Sun in 6th house<br><span class="text-muted">Interpretation:</span> Challenges with authority or health.</div>
+            <div class="card"><strong>🌾 Suggested Remedy</strong><br>Donate wheat on Thursday to pacify Jupiter.</div>
+            <button class="btn-primary" onclick="alert('🧿 More Lal Kitab remedies for your specific chart.')"><i class="fas fa-list"></i> View All Remedies</button>
+        </div>
+
+        <!-- ============================================================
+        MODULE: PALMISTRY
+        ============================================================ -->
+        <div id="screen-palmistry" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🖐️</span><h2>Palmistry</h2>
+            </div>
+            <button class="btn-primary" onclick="alert('📸 Upload clear photos of both palms.')"><i class="fas fa-camera"></i> Upload Palm Images</button>
+            <div class="card text-muted">Analyzes: Life Line, Heart Line, Head Line, Fate Line, Mounts &amp; Signs.</div>
+        </div>
+
+        <!-- ============================================================
+        MODULE: FACE READING
+        ============================================================ -->
+        <div id="screen-face-reading" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">👤</span><h2>Face Reading</h2>
+            </div>
+            <button class="btn-primary" onclick="alert('📸 Upload a clear front-facing photo.')"><i class="fas fa-camera"></i> Upload Photo</button>
+            <div class="card text-muted">Analyzes: Face shape, forehead, eyes, nose, lips, chin &amp; zones.</div>
+        </div>
+
+        <!-- ============================================================
+        MODULE: SIGNATURE
+        ============================================================ -->
+        <div id="screen-signature" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">✍️</span><h2>Signature Analysis</h2>
+            </div>
+            <button class="btn-primary" onclick="alert('📸 Upload an image of your signature.')"><i class="fas fa-camera"></i> Upload Signature</button>
+            <div class="card text-muted">Analyzes: Size, slant, underline, pressure, legibility &amp; more.</div>
+        </div>
+
+        <!-- ============================================================
+        MODULE: MUHURAT
+        ============================================================ -->
+        <div id="screen-muhurat" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">📅</span><h2>Muhurat</h2>
+            </div>
+            <div class="card">
+                <div class="flex-between"><span class="text-muted">Abhijit Muhurat</span><strong>11:48 AM – 12:36 PM</strong></div>
+                <div class="flex-between"><span class="text-muted">Amrit Kaal</span><strong>09:15 AM – 10:45 AM</strong></div>
+                <div class="flex-between"><span class="text-muted">Rahu Kaal</span><strong style="color:var(--color-danger);">03:30 PM – 05:00 PM</strong></div>
+            </div>
+            <button class="btn-primary" onclick="alert('🔍 Find Muhurat for Marriage, Business, Travel, Property, etc.')"><i class="fas fa-search"></i> Find Muhurat</button>
+        </div>
+
+        <!-- ============================================================
+        MODULE: REMEDIES
+        ============================================================ -->
+        <div id="screen-remedies" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🧿</span><h2>Remedies</h2>
+            </div>
+            <div class="tab-bar" id="remedyTabs">
+                <span class="tab active" onclick="filterRemedies('all', this)">All</span>
+                <span class="tab" onclick="filterRemedies('mantra', this)">Mantra</span>
+                <span class="tab" onclick="filterRemedies('gemstone', this)">Gemstone</span>
+                <span class="tab" onclick="filterRemedies('puja', this)">Puja</span>
+                <span class="tab" onclick="filterRemedies('vastu', this)">Vastu</span>
+            </div>
+            <div id="remediesList">
+                <div class="remedy-item" data-cat="mantra"><div class="r-icon">🕉️</div><div><div class="r-title">Om Namah Shivaya</div><div class="r-desc">Chant 108 times daily for peace</div><span class="r-badge">Mantra</span></div></div>
+                <div class="remedy-item" data-cat="gemstone"><div class="r-icon">💎</div><div><div class="r-title">Yellow Sapphire</div><div class="r-desc">Wear on Thursday for Jupiter blessings</div><span class="r-badge">Gemstone</span></div></div>
+                <div class="remedy-item" data-cat="puja"><div class="r-icon">🪔</div><div><div class="r-title">Tuesday Hanuman Puja</div><div class="r-desc">Visit temple, offer sindoor &amp; flowers</div><span class="r-badge">Puja</span></div></div>
+                <div class="remedy-item" data-cat="vastu"><div class="r-icon">🧂</div><div><div class="r-title">Salt Bowl Remedy</div><div class="r-desc">Place rock salt in South-East corner</div><span class="r-badge">Vastu</span></div></div>
+                <div class="remedy-item" data-cat="mantra"><div class="r-icon">🔱</div><div><div class="r-title">Gayatri Mantra</div><div class="r-desc">Chant 3 times daily for wisdom</div><span class="r-badge">Mantra</span></div></div>
+                <div class="remedy-item" data-cat="gemstone"><div class="r-icon">💍</div><div><div class="r-title">Pearl</div><div class="r-desc">Wear on Monday for emotional balance</div><span class="r-badge">Gemstone</span></div></div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        MODULE: COMPATIBILITY
+        ============================================================ -->
+        <div id="screen-compatibility" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">💞</span><h2>Compatibility</h2>
+            </div>
+            <div class="card text-center">
+                <span class="text-muted">Overall</span>
+                <div style="font-size:48px; font-weight:700; color:var(--color-success);">78%</div>
+                <div class="flex-center gap-12 mt-8">
+                    <span>❤️ Good</span><span>💬 Moderate</span><span>💰 Strong</span>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="alert('🔮 Full Guna Milan, Manglik, and astrological compatibility.')"><i class="fas fa-chart-bar"></i> Full Report</button>
+        </div>
+
+        <!-- ============================================================
+        MODULE: PANCHANG
+        ============================================================ -->
+        <div id="screen-panchang" class="screen">
+            <div class="module-header">
+                <button class="back-btn" onclick="navigateTo('explore')" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <span class="m-icon">🌙</span><h2>Panchang</h2>
+            </div>
+            <div class="card">
+                <div class="flex-between"><span class="text-muted">Tithi</span><strong>Shukla Dashami</strong></div>
+                <div class="flex-between"><span class="text-muted">Vara</span><strong>Thursday</strong></div>
+                <div class="flex-between"><span class="text-muted">Nakshatra</span><strong>Shravana</strong></div>
+                <div class="flex-between"><span class="text-muted">Yoga</span><strong>Vishkumbha</strong></div>
+                <div class="flex-between"><span class="text-muted">Sunrise</span><strong>06:32 AM</strong></div>
+                <div class="flex-between"><span class="text-muted">Sunset</span><strong>06:18 PM</strong></div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        BOTTOM NAVIGATION
+        ============================================================ -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-screen="home" onclick="navigateTo('home')">
+                <span class="nav-icon"><i class="fas fa-home"></i></span>Home
+            </button>
+            <button class="nav-item" data-screen="explore" onclick="navigateTo('explore')">
+                <span class="nav-icon"><i class="fas fa-search"></i></span>Explore
+            </button>
+            <button class="nav-item" data-screen="ask" onclick="navigateTo('ask')">
+                <span class="nav-icon"><i class="fas fa-sparkles"></i></span>Ask
+                <span class="badge" id="askBadge" style="display:none;">1</span>
+            </button>
+            <button class="nav-item" data-screen="reports" onclick="navigateTo('reports')">
+                <span class="nav-icon"><i class="fas fa-file-alt"></i></span>Reports
+                <span class="badge" id="reportBadge">0</span>
+            </button>
+            <button class="nav-item" data-screen="profile" onclick="navigateTo('profile')">
+                <span class="nav-icon"><i class="fas fa-user"></i></span>Profile
+            </button>
+        </nav>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT — FULL ENGINE [FIXED]
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================================
+            // BACKEND CONNECTION
+            // ============================================================
+            const backendUrl = 'https://apnajotish-backend-production.up.railway.app';
+
+            // ============================================================
+            // STATE
+            // ============================================================
+            const state = {
+                user: {
+                    name: 'Seeker',
+                    email: 'seeker@example.com',
+                    dob: '',
+                    birthTime: '',
+                    birthPlace: ''
+                },
+                reports: [],
+                darkMode: false,
+                listening: false,
+                recognition: null,
+                tarotDeck: [
+                    { name: 'The Fool', meaning: 'New beginnings, spontaneity, trust the journey.' },
+                    { name: 'The Magician', meaning: 'Manifestation, resourcefulness, power to create.' },
+                    { name: 'The High Priestess', meaning: 'Intuition, mystery, the subconscious mind.' },
+                    { name: 'The Empress', meaning: 'Abundance, nurturing, creativity.' },
+                    { name: 'The Emperor', meaning: 'Structure, authority, protection.' },
+                    { name: 'The Hierophant', meaning: 'Tradition, learning, spiritual guidance.' },
+                    { name: 'The Lovers', meaning: 'Love, union, choices, alignment.' },
+                    { name: 'The Chariot', meaning: 'Determination, willpower, victory.' },
+                    { name: 'Strength', meaning: 'Courage, patience, inner strength.' },
+                    { name: 'The Hermit', meaning: 'Introspection, wisdom, solitude.' },
+                    { name: 'Wheel of Fortune', meaning: 'Change, cycles, destiny.' },
+                    { name: 'Justice', meaning: 'Truth, fairness, accountability.' },
+                    { name: 'The Hanged Man', meaning: 'Surrender, letting go, new perspective.' },
+                    { name: 'Death', meaning: 'Transformation, endings, new beginnings.' },
+                    { name: 'Temperance', meaning: 'Balance, patience, harmony.' },
+                    { name: 'The Devil', meaning: 'Bondage, materialism, shadow self.' },
+                    { name: 'The Tower', meaning: 'Upheaval, sudden change, revelation.' },
+                    { name: 'The Star', meaning: 'Hope, healing, inspiration.' },
+                    { name: 'The Moon', meaning: 'Illusion, intuition, the unconscious.' },
+                    { name: 'The Sun', meaning: 'Joy, success, vitality.' },
+                    { name: 'Judgement', meaning: 'Evaluation, awakening, absolution.' },
+                    { name: 'The World', meaning: 'Completion, fulfillment, integration.' }
+                ]
+            };
+
+            // ============================================================
+            // DOM REFS
+            // ============================================================
+            const $ = (s) => document.querySelector(s);
+            const $$ = (s) => document.querySelectorAll(s);
+            const app = $('#app');
+            const screens = $$('.screen');
+            const navItems = $$('.nav-item');
+            const loadingOverlay = $('#loadingOverlay');
+            const loadingStep = $('#loadingStep');
+            const reportsList = $('#reportsList');
+            const noReports = $('#noReports');
+            const reportBadge = $('#reportBadge');
+            const reportCount = $('#reportCount');
+            const askBadge = $('#askBadge');
+            const profileModal = $('#profileModal');
+
+            // ============================================================
+            // FIX #12: LOCAL STORAGE PERSISTENCE
+            // ============================================================
+            function saveUserData() {
+                localStorage.setItem('tricci-user', JSON.stringify(state.user));
+                localStorage.setItem('tricci-reports', JSON.stringify(state.reports));
+            }
+
+            function loadUserData() {
+                const saved = localStorage.getItem('tricci-user');
+                if (saved) {
+                    try {
+                        state.user = JSON.parse(saved);
+                    } catch (e) {
+                        console.warn('Failed to load user data');
+                    }
+                }
+                const savedReports = localStorage.getItem('tricci-reports');
+                if (savedReports) {
+                    try {
+                        state.reports = JSON.parse(savedReports);
+                    } catch (e) {
+                        console.warn('Failed to load reports');
+                    }
+                }
+            }
+
+            // ============================================================
+            // THEME
+            // ============================================================
+            window.toggleTheme = function() {
+                state.darkMode = !state.darkMode;
+                document.body.classList.toggle('dark', state.darkMode);
+                const icon = document.querySelector('.theme-toggle i');
+                icon.className = state.darkMode ? 'fas fa-sun' : 'fas fa-moon';
+                localStorage.setItem('tricci-theme', state.darkMode ? 'dark' : 'light');
+            };
+
+            function loadTheme() {
+                const saved = localStorage.getItem('tricci-theme');
+                if (saved === 'dark') {
+                    state.darkMode = true;
+                    document.body.classList.add('dark');
+                    document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+                }
+            }
+
+            // ============================================================
+            // NAVIGATION
+            // ============================================================
+            window.navigateTo = function(screenId) {
+                screens.forEach(s => s.classList.remove('active'));
+                const target = document.getElementById(`screen-${screenId}`);
+                if (target) target.classList.add('active');
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.screen === screenId);
+                });
+                if (screenId === 'reports') renderReports();
+                if (screenId === 'home') updateGreeting();
+                updateBadges(); // FIX #4: Update badges on navigation
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            function updateGreeting() {
+                const hour = new Date().getHours();
+                let time = 'Morning';
+                if (hour >= 12 && hour < 17) time = 'Afternoon';
+                else if (hour >= 17) time = 'Evening';
+                document.getElementById('greetingTime').textContent = time;
+                document.getElementById('userName').textContent = state.user.name || 'Seeker';
+            }
+
+            // ============================================================
+            // FIX #1 & #5: VOICE INPUT WITH PROPER CLEANUP & ERROR HANDLING
+            // ============================================================
+            window.toggleVoice = function() {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    alert('Voice input requires Chrome or Edge.');
+                    return;
+                }
+                if (state.listening) {
+                    if (state.recognition) state.recognition.abort();
+                    state.listening = false;
+                    const btn = $('#voiceBtn');
+                    btn.classList.remove('listening');
+                    btn.innerHTML = '<i class="fas fa-microphone"></i> Ask by Voice';
+                    return;
+                }
+
+                // Cleanup old instance
+                if (state.recognition) state.recognition.abort();
+
+                state.recognition = new SpeechRecognition();
+                state.recognition.lang = navigator.language || 'en-US';
+                state.recognition.interimResults = false;
+                state.recognition.maxAlternatives = 1;
+
+                state.recognition.onstart = () => {
+                    state.listening = true;
+                    const btn = $('#voiceBtn');
+                    btn.classList.add('listening');
+                    btn.innerHTML = '<i class="fas fa-stop-circle"></i> Listening…';
+                };
+
+                state.recognition.onresult = (e) => {
+                    const transcript = e.results[0][0].transcript;
+                    document.getElementById('questionInput').value = transcript;
+                    state.listening = false;
+                    const btn = $('#voiceBtn');
+                    btn.classList.remove('listening');
+                    btn.innerHTML = '<i class="fas fa-microphone"></i> Ask by Voice';
+                    updateBadges();
+                };
+
+                state.recognition.onerror = (e) => {
+                    state.listening = false;
+                    const btn = $('#voiceBtn');
+                    btn.classList.remove('listening');
+                    btn.innerHTML = '<i class="fas fa-microphone"></i> Ask by Voice';
+
+                    // FIX #5: Better error messages
+                    let msg = 'Voice recognition error. Please try typing instead.';
+                    if (e.error === 'not-allowed') msg = 'Microphone permission denied. Please enable it in settings.';
+                    if (e.error === 'network') msg = 'Network error. Please check your connection.';
+                    if (e.error === 'no-speech') msg = 'No speech detected. Please try again.';
+                    alert(msg);
+                };
+
+                state.recognition.onend = () => {
+                    if (state.listening) {
+                        state.listening = false;
+                        const btn = $('#voiceBtn');
+                        btn.classList.remove('listening');
+                        btn.innerHTML = '<i class="fas fa-microphone"></i> Ask by Voice';
+                    }
+                };
+
+                state.recognition.start();
+            };
+
+            window.setExample = function(text) {
+                const input = document.getElementById('questionInput');
+                input.value = text;
+                input.focus();
+                updateBadges();
+            };
+
+            // ============================================================
+            // FIX #11: DEBOUNCED UPDATEBADGES
+            // ============================================================
+            const debounce = (fn, delay) => {
+                let timeout;
+                return (...args) => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => fn(...args), delay);
+                };
+            };
+
+            function updateBadges() {
+                const q = document.getElementById('questionInput')?.value?.trim();
+                askBadge.style.display = (q && q.length > 0) ? 'flex' : 'none';
+                const count = state.reports.length;
+                reportBadge.style.display = count > 0 ? 'flex' : 'none';
+                reportBadge.textContent = count;
+            }
+
+            const debouncedUpdateBadges = debounce(updateBadges, 300);
+
+            // ============================================================
+            // ASK QUESTION
+            // ============================================================
+            window.submitQuestion = async function() {
+                const input = document.getElementById('questionInput');
+                const question = input.value.trim();
+                if (!question) {
+                    alert('Please enter a question.');
+                    input.focus();
+                    return;
+                }
+
+                const btn = $('#askBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Processing…';
+
+                const steps = [
+                    '🔍 Understanding your question…',
+                    '📊 Calculating your chart…',
+                    '🔢 Checking numerological factors…',
+                    '🃏 Consulting the Tarot…',
+                    '🧿 Gathering remedies…',
+                    '✨ Preparing your guidance…'
+                ];
+
+                showLoading(steps[0]);
+                for (let i = 0; i < steps.length; i++) {
+                    await sleep(800 + Math.random() * 400);
+                    if (i < steps.length - 1) updateLoading(steps[i + 1]);
+                    else updateLoading('✨ Your guidance is ready!');
+                }
+                await sleep(400);
+
+                try {
+                    const report = await fetchGuidanceFromGroq(question);
+                    state.reports.unshift(report);
+                    saveUserData();
+                    hideLoading();
+                    input.value = '';
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sparkles"></i> Get Guidance';
+                    updateBadges();
+                    navigateTo('reports');
+                    renderReports();
+                } catch (error) {
+                    hideLoading();
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sparkles"></i> Get Guidance';
+                    alert('Error getting guidance: ' + error.message);
+                }
+            };
+
+            // FETCH FROM GROQ BACKEND
+            // ============================================================
+            async function fetchGuidanceFromGroq(question) {
+                const response = await fetch(backendUrl + '/api/ask-jotish', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: question,
+                        userProfile: state.user
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Backend error: ' + response.statusText);
+                }
+
+                const data = await response.json();
+
+                const locale = navigator.language || 'en-US';
+                return {
+                    id: Date.now().toString(),
+                    question: question,
+                    summary: data.summary || 'Guidance received from Groq AI',
+                    detailed: {
+                        astro: data.guidance || 'Please check your question and try again.',
+                        num: '',
+                        tarot: ''
+                    },
+                    date: new Date().toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
+                    time: new Date().toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })
+                };
+            }
+
+            function generateReport(q) {
+                const summaries = [
+                    'Based on your chart and numerology, this period indicates strong potential for positive changes. You are encouraged to take practical steps while staying open to opportunities.',
+                    'The stars suggest a time of transition. Patience and self-reflection will guide you toward clarity.',
+                    'Your current planetary alignment favours communication and relationships. Express yourself openly.',
+                    'This is a favourable time for new beginnings. Trust your intuition and take calculated risks.'
+                ];
+                const astro = [
+                    'Jupiter transiting your 10th house favours career advancement.',
+                    'Saturn in the 7th house suggests lessons in relationships.',
+                    'Mercury retrograde calls for careful communication.',
+                    'Venus in the 5th house brings creativity and romance.'
+                ];
+                const num = [
+                    'Your personal year 3 is creative and social.',
+                    'Destiny 8 favours leadership and material success.',
+                    'Life Path 5 indicates adaptability and freedom.',
+                    'Name number 7 points toward introspection and wisdom.'
+                ];
+                const tarot = [
+                    'The Fool appears — new beginnings ahead.',
+                    'The Lovers suggest alignment and choice.',
+                    'The Chariot indicates determination and victory.',
+                    'The Star brings hope and healing.'
+                ];
+
+                // FIX #10: Use navigator.language instead of hardcoded en-IN
+                const locale = navigator.language || 'en-US';
+                return {
+                    id: Date.now().toString(),
+                    question: q,
+                    summary: summaries[Math.floor(Math.random() * summaries.length)],
+                    detailed: {
+                        astro: astro[Math.floor(Math.random() * astro.length)],
+                        num: num[Math.floor(Math.random() * num.length)],
+                        tarot: tarot[Math.floor(Math.random() * tarot.length)]
+                    },
+                    date: new Date().toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
+                    time: new Date().toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })
+                };
+            }
+
+            // ============================================================
+            // QUICK ASK
+            // ============================================================
+            window.quickAsk = function(area) {
+                const map = {
+                    marriage: 'Will I get married this year? What does my chart say?',
+                    career: 'Why am I facing problems in my career? Is there a change coming?',
+                    money: 'How can I improve my financial situation? What periods are favourable?',
+                    family: 'What does my family future look like? Are there any concerns?',
+                    home: 'My house doesn\'t feel peaceful. What should I check from a Vastu perspective?',
+                    travel: 'Is this a good time for foreign travel or settlement?'
+                };
+                document.getElementById('questionInput').value = map[area] || '';
+                navigateTo('ask');
+                setTimeout(() => document.getElementById('questionInput').focus(), 300);
+                updateBadges();
+            };
+
+            // ============================================================
+            // TAROT - FIX #15: Clear old results
+            // ============================================================
+            window.drawTarot = function(index) {
+                const cards = document.querySelectorAll('.tarot-card');
+                const card = cards[index];
+                if (!card) return;
+
+                cards.forEach((c, i) => {
+                    if (i !== index) c.classList.remove('flipped');
+                });
+
+                const back = card.querySelector('.tarot-card-back');
+                const rand = state.tarotDeck[Math.floor(Math.random() * state.tarotDeck.length)];
+                back.querySelector('.t-title').textContent = rand.name;
+                back.querySelector('.t-meaning').textContent = rand.meaning;
+                card.classList.add('flipped');
+
+                const resultDiv = $('#tarotResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <h4>🃏 ${rand.name}</h4>
+                    <p style="margin-top:4px;">${rand.meaning}</p>
+                    <p style="margin-top:8px; font-size:14px; color:var(--color-text-muted);">✨ This card offers guidance for your situation.</p>
+                    <button class="btn-small mt-8" onclick="resetTarot()" style="width:auto;">🔄 Draw Again</button>
+                `;
+            };
+
+            window.resetTarot = function() {
+                document.querySelectorAll('.tarot-card').forEach(c => c.classList.remove('flipped'));
+                $('#tarotResult').style.display = 'none';
+            };
+
+            // ============================================================
+            // REMEDIES FILTER - FIX #9: Empty state
+            // ============================================================
+            window.filterRemedies = function(cat, el) {
+                document.querySelectorAll('#remedyTabs .tab').forEach(t => t.classList.remove('active'));
+                if (el) el.classList.add('active');
+
+                const items = document.querySelectorAll('#remediesList .remedy-item');
+                let visibleCount = 0;
+                items.forEach(item => {
+                    const show = cat === 'all' || item.dataset.cat === cat;
+                    item.style.display = show ? 'flex' : 'none';
+                    if (show) visibleCount++;
+                });
+
+                // Remove previous empty state
+                const prev = document.querySelector('.empty-remedies');
+                if (prev) prev.remove();
+
+                if (visibleCount === 0) {
+                    const remediesList = document.getElementById('remediesList');
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'empty-remedies';
+                    emptyDiv.innerHTML = '🌿 No remedies in this category.';
+                    remediesList.appendChild(emptyDiv);
+                }
+            };
+
+            // ============================================================
+            // REPORTS
+            // ============================================================
+            function renderReports() {
+                if (state.reports.length === 0) {
+                    reportsList.innerHTML = '';
+                    noReports.style.display = 'block';
+                    reportBadge.textContent = '0';
+                    if (reportCount) reportCount.textContent = '0';
+                    return;
+                }
+                noReports.style.display = 'none';
+                reportBadge.textContent = state.reports.length;
+                if (reportCount) reportCount.textContent = state.reports.length;
+
+                reportsList.innerHTML = state.reports.map((r) => `
+                    <div class="card report-card" onclick="viewReport('${r.id}')">
+                        <div class="summary">${r.summary}</div>
+                        <div class="meta">
+                            <span>${r.date} · ${r.time || ''}</span>
+                            <span class="tag">✨ Complete</span>
+                            <span style="margin-left:auto; color:var(--color-primary);">View →</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            window.viewReport = function(id) {
+                const r = state.reports.find(x => x.id === id);
+                if (!r) return;
+                alert(
+                    `📄 Your Report\n\n` +
+                    `Question: ${r.question || '—'}\n\n` +
+                    `✨ ${r.summary}\n\n` +
+                    `🔮 Astrology: ${r.detailed?.astro || '—'}\n` +
+                    `🔢 Numerology: ${r.detailed?.num || '—'}\n` +
+                    `🃏 Tarot: ${r.detailed?.tarot || '—'}\n\n` +
+                    `📅 ${r.date} · ${r.time}\n\n` +
+                    `🧿 Traditional guidance only.`
+                );
+            };
+
+            // ============================================================
+            // FIX #16 & #17: PROFILE MODAL WITH FORM & VALIDATION
+            // ============================================================
+            window.openProfileModal = function() {
+                document.getElementById('modalName').value = state.user.name || '';
+                document.getElementById('modalEmail').value = state.user.email || '';
+                document.getElementById('modalDob').value = state.user.dob || '';
+                document.getElementById('modalTime').value = state.user.birthTime || '';
+                document.getElementById('modalPlace').value = state.user.birthPlace || '';
+                profileModal.classList.add('show');
+            };
+
+            window.closeProfileModal = function() {
+                profileModal.classList.remove('show');
+            };
+
+            window.saveProfile = function() {
+                const name = document.getElementById('modalName').value.trim();
+                const email = document.getElementById('modalEmail').value.trim();
+                const dob = document.getElementById('modalDob').value.trim();
+                const time = document.getElementById('modalTime').value.trim();
+                const place = document.getElementById('modalPlace').value.trim();
+
+                // FIX #17: Validation
+                if (name && name.length < 2) {
+                    alert('Name must be at least 2 characters.');
+                    return;
+                }
+                if (email && !email.includes('@')) {
+                    alert('Please enter a valid email.');
+                    return;
+                }
+                if (dob && !/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
+                    alert('Date of birth must be in YYYY-MM-DD format.');
+                    return;
+                }
+                if (time && !/^\d{2}:\d{2}/.test(time)) {
+                    alert('Birth time must be in HH:MM format.');
+                    return;
+                }
+
+                if (name) state.user.name = name;
+                if (email) state.user.email = email;
+                if (dob) state.user.dob = dob;
+                if (time) state.user.birthTime = time;
+                if (place) state.user.birthPlace = place;
+
+                saveUserData();
+                updateProfileDisplay();
+                updateGreeting();
+                closeProfileModal();
+            };
+
+            function updateProfileDisplay() {
+                document.getElementById('profileName').textContent = state.user.name || 'Seeker';
+                document.getElementById('profileNameDisplay').textContent = state.user.name || 'Seeker';
+                document.getElementById('profileEmailDisplay').textContent = state.user.email || 'seeker@example.com';
+                document.getElementById('profileDob').textContent = state.user.dob || '—';
+                document.getElementById('profileTime').textContent = state.user.birthTime || '—';
+                document.getElementById('profilePlace').textContent = state.user.birthPlace || '—';
+            }
+
+            window.logout = function() {
+                if (confirm('Logout?')) {
+                    state.user = { name: 'Seeker', email: 'seeker@example.com', dob: '', birthTime: '', birthPlace: '' };
+                    state.reports = [];
+                    saveUserData();
+                    updateProfileDisplay();
+                    updateGreeting();
+                    navigateTo('home');
+                    updateBadges();
+                }
+            };
+
+            // ============================================================
+            // LOADING HELPERS
+            // ============================================================
+            function showLoading(text) {
+                loadingStep.textContent = text || 'Processing…';
+                loadingOverlay.classList.add('show');
+            }
+
+            function updateLoading(text) {
+                loadingStep.textContent = text;
+            }
+
+            function hideLoading() {
+                loadingOverlay.classList.remove('show');
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            // ============================================================
+            // INIT
+            // ============================================================
+            // ============================================================
+            // SPLASH SCREEN
+            // ============================================================
+            let splashShown = localStorage.getItem('splashShown') === 'true' ? true : false;
+
+            function closeSplash() {
+                const splash = document.getElementById('splashScreen');
+                if (splash) {
+                    splash.classList.add('hide');
+                    splash.addEventListener('animationend', () => {
+                        splash.style.display = 'none';
+                    }, { once: true });
+                    localStorage.setItem('splashShown', 'true');
+                }
+            }
+
+            function initSplashScreen() {
+                const splash = document.getElementById('splashScreen');
+                if (splash) {
+                    // Check dark mode preference
+                    if (document.body.classList.contains('dark')) {
+                        splash.classList.add('dark-mode');
+                    }
+
+                    // Add click handler to entire splash screen
+                    splash.addEventListener('click', closeSplash);
+
+                    // Auto-close after 5 seconds (give it time to see the animation)
+                    // Comment this out if you want users to click to continue
+                    // setTimeout(closeSplash, 5000);
+                }
+            }
+
+            function init() {
+                loadTheme();
+                
+                // Initialize splash screen
+                initSplashScreen();
+
+                // If splash was already shown, hide it immediately
+                if (splashShown) {
+                    const splash = document.getElementById('splashScreen');
+                    if (splash) splash.style.display = 'none';
+                }
+
+                loadUserData();
+                updateProfileDisplay();
+                updateGreeting();
+                renderReports();
+                updateBadges();
+
+                // Input event listener
+                const questionInput = document.getElementById('questionInput');
+                if (questionInput) {
+                    questionInput.addEventListener('input', debouncedUpdateBadges);
+                }
+
+                // FIX #13: Reduce loading screen time from 1200ms to 800ms
+                setTimeout(() => {
+                    document.getElementById('loading-screen').classList.add('hidden');
+                }, 800);
+
+                // Close modal on outside click
+                profileModal.addEventListener('click', (e) => {
+                    if (e.target === profileModal) closeProfileModal();
+                });
+
+                console.log('✨ Apna Jotish v2.1 [FIXED] ready.');
+            }
+
+            document.addEventListener('DOMContentLoaded', init);
+            if (document.readyState === 'complete' || document.readyState === 'interactive') init();
+
+        })();
+    </script>
+</body>
+</html>
