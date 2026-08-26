@@ -2,11 +2,11 @@
   "name": "apnajotish-backend",
   "version": "2.0.0",
   "description": "Deterministic Vedic Kundli Calculation Engine with Swiss Ephemeris",
-  "main": "server-v2.js",
-  "type": "module",
+  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
-    "start": "node server-v2.js",
-    "dev": "node server-v2.js",
+    "start": "node server.js",
+    "dev": "node server.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
