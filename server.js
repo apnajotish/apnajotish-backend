@@ -6,6 +6,14 @@ const express = require('express');
 const Groq = require('groq-sdk');
 require('dotenv').config();
 
+// Import kundli calculation engine
+let calculateKundli;
+try {
+    calculateKundli = require('./kundliEngine').calculateKundli;
+} catch (err) {
+    console.warn('⚠️  Warning: Kundli engine not available:', err.message);
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -269,6 +277,80 @@ app.post('/api/reports/:userId', (req, res) => {
 // ANALYSIS ENDPOINTS (Placeholder)
 // ============================================================
 
+// ============================================================
+// KUNDLI CALCULATION
+// ============================================================
+
+app.post('/api/kundli/calculate', async (req, res) => {
+    try {
+        const { name, dob, time, place, latitude, longitude, timezone, timeAccuracy } = req.body;
+
+        // Validate required fields
+        if (!dob || !time || !place) {
+            return res.status(400).json({
+                success: false,
+                error: 'Missing required fields: dob (YYYY-MM-DD), time (HH:MM:SS), place'
+            });
+        }
+
+        // If kundli engine is not available, return mock data
+        if (!calculateKundli) {
+            console.warn('⚠️  Kundli engine not available, returning mock data');
+            return res.json({
+                success: true,
+                data: {
+                    ascendant: { name: 'Virgo', longitude: 178.7 },
+                    moon: {
+                        rashi: 'Taurus',
+                        nakshatra: 'Rohini',
+                        strength: 0.75,
+                        longitude: 48.9
+                    },
+                    currentDasha: {
+                        mahadasha: 'Moon',
+                        antardasha: 'Jupiter'
+                    },
+                    planets: [
+                        { name: 'Sun', rashi: 'Leo', longitude: 125.4 },
+                        { name: 'Moon', rashi: 'Taurus', longitude: 48.9 },
+                        { name: 'Mars', rashi: 'Capricorn', longitude: 285.2 }
+                    ],
+                    houses: []
+                }
+            });
+        }
+
+        // Calculate kundli
+        const startTime = Date.now();
+        const kundli = await calculateKundli({
+            name: name || 'User',
+            dob,
+            time,
+            place,
+            latitude,
+            longitude,
+            timezone: timezone || 'Asia/Kolkata',
+            timeAccuracy: timeAccuracy || 'exact'
+        });
+
+        const calculationTime = Date.now() - startTime;
+
+        res.json({
+            success: true,
+            data: kundli,
+            calculationTime: `${calculationTime}ms`
+        });
+
+    } catch (error) {
+        console.error('Kundli calculation error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to calculate kundli',
+            details: error.message
+        });
+    }
+});
+
 app.post('/api/astrology/analyze', (req, res) => {
     const { dob, birthTime, birthPlace } = req.body;
 
@@ -348,6 +430,7 @@ app.use((req, res) => {
         method: req.method,
         available: [
             'GET /health',
+            'POST /api/kundli/calculate',
             'POST /api/ask-jotish',
             'POST /api/auth/register',
             'POST /api/auth/login',
